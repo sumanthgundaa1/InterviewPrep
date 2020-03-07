@@ -1,0 +1,148 @@
+public class LinkedList{
+    
+    public class Node {
+        Node Next;
+        int data;
+        public Node(int data) {
+            this.data = data;
+        }
+    }
+    
+    Node head = null;
+    Node tail = null;
+    
+    public void insertAtStart(int data) {
+        if(head == null) {
+            Node temp = new Node(data);
+            head = temp;
+            tail = temp;
+        }
+        else {
+            Node temp = new Node(data);
+            temp.Next = head;
+            head = temp;
+        }
+    }
+    
+    public void insertAtEnd(int data) {
+        if(head == null) {
+            Node temp = new Node(data);
+            head = temp;
+            tail = temp;
+        } 
+        else {
+            Node temp = new Node(data);
+            tail.Next = temp;
+            tail = temp;
+        }
+    }
+    
+    public void insertAtIndex(int data, int index) {
+        if(head == null) {
+            return;
+        }
+        
+        Node temp = new Node(data);
+        Node current = head;
+        int count = 0;
+        while(current.Next != null)
+        {
+            count += 1;
+            if(count == index) {
+                temp.Next = current.Next;
+                current.Next = temp;
+                break;
+            }
+            current = current.Next;
+        }
+    }
+    
+    public void removeAtStart() {
+        if(head == null) {
+            return;
+        }
+        
+        head = head.Next;
+    }
+    
+    public void removeAtEnd() {
+        if(head == null) {
+            return;
+        }
+        Node current = head;
+        
+        while(current.Next.Next != null) 
+        {
+            current = current.Next;
+        }
+        current.Next = null;
+        tail = current;
+    }
+    
+    public void removeNodeAtIndex(int index) {
+        if(head == null) {
+            return;
+        }
+        int count = 0;
+        Node current = head;
+        while(current.Next != null){
+            count += 1;
+            if(count == index) 
+            {
+                current.Next = current.Next.Next;
+                break;
+            }
+            current = current.Next;
+        }
+    }
+    
+    public boolean search(int value) {
+        if(head == null) 
+        {
+            return false;
+        }
+        
+        Node current = head;
+        while(current != null)
+        {
+            if(current.data == value) {
+                return true;
+            }
+            current = current.Next;
+        }
+        return false;
+    }
+	
+	public void printLinkedList(){
+		System.out.println();
+		Node temp = head;
+		while(temp!=null){
+			System.out.print(" "+temp.data);
+			temp = temp.Next;
+		}
+	}
+
+     public static void main(String []args){
+        LinkedList list = new LinkedList();
+		list.insertAtStart(10);
+		list.insertAtStart(20);
+		list.insertAtEnd(30);
+		list.insertAtIndex(40, 1);
+		list.printLinkedList();
+		list.removeAtStart();
+		list.printLinkedList();
+		list.removeAtEnd();
+	    list.printLinkedList();
+	    list.insertAtStart(12);
+	    list.insertAtStart(13);
+	    list.printLinkedList();
+	    list.removeNodeAtIndex(2);
+	    list.printLinkedList();
+	    System.out.println();
+	    System.out.println(list.search(12));
+	    System.out.println();
+	    System.out.println(list.search(10));
+	    System.out.println();
+	    System.out.println(list.search(40));
+     }
+}
