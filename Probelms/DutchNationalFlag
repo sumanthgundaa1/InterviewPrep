@@ -1,0 +1,38 @@
+public class DutchNationalFlag{
+    
+    static void sortColors(int[] array) {
+        if(array.length == 0 || array.length == 1) {
+            return;
+        }
+        int low = 0;
+        int high = array.length - 1;
+        int curr = 0;
+        
+        while(curr <= high) {
+            if(array[curr] == 0)
+            {
+                array[curr] = array[low];
+                array[low] = 0;
+                low++;
+                curr++;
+            } else if(array[curr] == 2)
+            {
+                array[curr] = array[high];
+                array[high] = 2;
+                high--;
+            } else {
+                curr++;
+            }
+        }
+    }
+
+     public static void main(String []args){
+        DutchNationalFlag d = new DutchNationalFlag();
+        int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 }; 
+        int arr_size = arr.length; 
+        sortColors(arr);
+        for(int i = 0; i< arr.length; i++) {
+            System.out.print(" "+ arr[i]);
+        }
+     }
+}
