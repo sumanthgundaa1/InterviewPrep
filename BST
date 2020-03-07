@@ -1,0 +1,169 @@
+public class BST{
+    
+    public class Node {
+        Node left;
+        Node right;
+        int data;
+        public Node(int data)
+        {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+    }
+    
+    Node root;
+    
+    public BST() {
+        this.root = null;
+    }
+    
+    public void add(int data) {
+        root = addRecursive(root, data);
+    }
+    
+    
+    public Node addRecursive(Node root, int data) {
+        if(root == null)
+        {
+            root = new Node(data);
+            return root;
+        }
+        if(data < root.data) {
+            root.left = addRecursive(root.left, data);
+        } 
+        else if(data > root.data) {
+            root.right = addRecursive(root.right, data);
+        }
+        return root;
+    }
+    //In Order: L Ro Ri 
+    //Pre Order: Ro L Ri
+    //Post Order: L Ri Ro
+    public void inOrder()
+    {
+        inOrderRecursive(root);    
+    }
+    
+    public void inOrderRecursive(Node root) {
+        if(root != null) {
+            inOrderRecursive(root.left);
+            System.out.println(" "+ root.data);
+            inOrderRecursive(root.right);
+        }
+    }
+    
+    public void preOrder()
+    {
+        preOrderRecursive(root);
+    }
+    
+    public void preOrderRecursive(Node root) {
+        if(root!=null) {
+            System.out.println(root.data);
+            preOrderRecursive(root.left);
+            preOrderRecursive(root.right);
+        }
+    }
+    
+        public void postOrder()
+        {
+        postOrderRecursive(root);
+        }
+    
+    public void postOrderRecursive(Node root) {
+        if(root!=null) {
+            postOrderRecursive(root.left);
+            postOrderRecursive(root.right);
+            System.out.println(root.data);
+        }
+    }
+    
+    public boolean search(int data) {
+        return searchRecursive(root, data);
+    }
+    
+    public boolean searchRecursive(Node root, int data) {
+        if(root == null) return false;
+        if(root.data == data) {
+            return true;
+        } 
+        else if(data < root.data) {
+            if(root.left == null) return false;
+            return searchRecursive(root.left, data);
+        } 
+        else {
+            if(root.right == null) return false;
+            return searchRecursive(root.right, data);
+        }
+    }
+    
+    public void remove(int data) {
+        root = removeRecursive(root, data);
+    }
+    
+    public Node removeRecursive(Node root, int data) {
+        if(root == null) {
+            return root;
+        }
+
+        if(data < root.data) {
+            root.left = removeRecursive(root.left, data);
+        } else if(data > root.data) {
+            root.right = removeRecursive(root.right, data);
+        } else {
+            //Case 1: When Root has one Children then Return that children as root
+            if(root.left == null) return root.right;
+            else if(root.right ==  null) return root.left;
+            
+            //Case 2: When Root has 2  Children
+            else {
+                root.data = minValue(root.right);
+                root.right = removeRecursive(root.right, root.data);
+            }
+            return root;    
+        }
+        return root;
+    }
+    
+    public int minValue(Node root) {
+        int min = root.data;
+        while(root.left != null) {
+            min = root.left.data;
+            root = root.left;
+        }
+        return min;
+    }
+
+     public static void main(String []args){
+        BST tree = new BST(); 
+  
+        /* Let us create following BST 
+              50 
+           /     \ 
+          30      70 
+         /  \    /  \ 
+       20   40  60   80 */
+        tree.add(50); 
+        tree.add(30); 
+        tree.add(20); 
+        tree.add(40); 
+        tree.add(70); 
+        tree.add(60); 
+        tree.add(80); 
+  
+        // print inorder traversal of the BST 
+        tree.inOrder();
+        
+        tree.preOrder();
+        
+        tree.postOrder();
+        System.out.println(tree.search(20));
+        System.out.println(tree.search(70));
+        System.out.println(tree.search(100));
+        tree.remove(80);
+        tree.inOrder();
+        tree.remove(50);
+        tree.inOrder();
+     }
+}
