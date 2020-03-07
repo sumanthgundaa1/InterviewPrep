@@ -1,0 +1,56 @@
+public class Queue{
+    
+    public class Node {
+        Node next;
+        int data;
+        public Node(int data) {
+            this.data = data;
+        }
+    }
+    
+    Node head = null;
+    Node tail = null;
+    
+    //Add to the Last
+    public void enqueue(int data) {
+        if(tail  == null) {
+            head = tail = new Node(data);
+        } else {
+            Node temp = new Node(data);
+            tail.next = temp;
+            tail = temp;
+        }
+    }
+    
+    //Remove from the First
+    public void dequeue() {
+        if(head == null) {
+            return;
+        }
+        head = head.next;
+    }
+    
+    
+    public void printQueue() {
+        System.out.println();
+        if(head == null) {
+            return;
+        }
+        Node current = head;
+        while(current != null) {
+            System.out.print(" "+ current.data);
+            current = current.next;
+        }
+    }
+
+     public static void main(String []args){
+        Queue q = new Queue();
+        q.enqueue(10);
+        q.enqueue(20);
+        q.enqueue(30);
+        q.printQueue();
+        q.dequeue();
+        q.dequeue();
+        q.printQueue();
+     }
+}
