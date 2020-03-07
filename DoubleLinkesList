@@ -1,0 +1,98 @@
+public class DoubleLinkedList{
+    
+    public class Node {
+        Node next;
+        Node prev;
+        int data;
+        
+        public Node(int data)
+        {
+            this.data = data;    
+        }
+    }
+    
+    Node head = null;
+    Node tail = null;
+    
+    public void insertatStart(int data) {
+        Node temp = new Node(data);
+        if(head == null)
+        {
+            head = tail = temp;
+            head.prev = null;
+            tail.next = null;
+        } else { 
+            head.prev = temp;
+            temp.next = head;
+            head = temp;   
+        }
+    }
+    
+    public void insertAtEnd(int data) {
+        Node temp = new Node(data);
+        if(tail == null) {
+            head = tail = temp;
+            tail.next = null;
+            head.prev = null;
+        } else {
+            tail.next = temp;
+            temp.prev = tail;
+            tail = temp;
+        }
+    }
+    
+    public void removeAtFirst()
+    {
+        if(head == null)
+        {
+            return;
+        } else if(head == tail) {
+            head = null;
+            tail = null;
+            return;
+        }
+        head = head.next;
+        head.prev = null;
+    }
+    
+    public void removeAtLast() {
+        if(tail == null) {
+            return;
+        }
+        if (head == tail) {
+            head = tail = null;
+            return;
+        }
+        tail = tail.prev;
+        tail.next = null;
+    }
+    
+    public void printDoubleList()
+    {
+        System.out.println();
+        Node current = head;
+        while(current != null)
+        {
+            System.out.print(" "+current.data);
+            current = current.next;
+        }
+    }
+    
+
+     public static void main(String []args){
+        DoubleLinkedList doubleList = new DoubleLinkedList();
+        doubleList.insertatStart(10);
+        doubleList.insertatStart(20);
+        doubleList.printDoubleList();
+        doubleList.insertAtEnd(30);
+        doubleList.insertAtEnd(40);
+        doubleList.printDoubleList();
+        doubleList.removeAtFirst();
+        doubleList.removeAtLast();
+        // doubleList.removeAtFirst();
+        // doubleList.removeAtFirst();
+        // doubleList.removeAtFirst();
+        doubleList.printDoubleList();
+        
+     }
+}
