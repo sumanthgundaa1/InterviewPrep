@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+public class BFS{
+    
+    private Queue<Node> queue;
+    
+    static class Node {
+        int data;
+        boolean visited;
+        List<Node> neighbours;
+        
+        public Node(int data) {
+            this.data = data;
+            this.neighbours = new ArrayList<Node>();
+        }
+        
+        public void addNeighbour(Node neighbourNode) {
+            this.neighbours.add(neighbourNode);
+        }
+        
+        public List<Node> getNeighbours() {
+            return this.neighbours;
+        }
+    }
+    
+    public BFS() {
+        queue = new LinkedList<Node>();
+    }
+    
+    
+    public void BFSTraversal(Node node) {
+        queue.add(node);
+        node.visited = true;
+        
+        while(!queue.isEmpty()) {
+            Node element = queue.remove();
+            System.out.print(" "+ element.data);
+            for(Node neighbour: element.neighbours) {
+                if(neighbour!=null && !neighbour.visited)
+                {
+                    queue.add(neighbour);
+                    neighbour.visited = true;
+                }
+            }
+        }
+    }
+    
+     public static void main(String []args){
+        BFS b = new BFS();
+        Node node40 =new Node(40);
+		Node node10 =new Node(10);
+		Node node20 =new Node(20);
+		Node node30 =new Node(30);
+		Node node60 =new Node(60);
+		Node node50 =new Node(50);
+		Node node70 =new Node(70);
+ 
+		node40.addNeighbour(node10);
+		node40.addNeighbour(node20);
+		node10.addNeighbour(node30);
+		node20.addNeighbour(node10);
+		node20.addNeighbour(node30);
+		node20.addNeighbour(node60);
+		node20.addNeighbour(node50);
+		node30.addNeighbour(node60);
+		node60.addNeighbour(node70);
+		node50.addNeighbour(node70);
+        b.BFSTraversal(node40);
+     }
+}
