@@ -1,0 +1,77 @@
+public class BSTtoSTR{
+
+    public class Node {
+        int data;
+        Node left;
+        Node right;
+        public Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+    }
+    
+    Node root;
+    
+    public BSTtoSTR() {
+        this.root = null;
+    }
+    
+    public void add(int data) {
+        root = addRecursive(root, data);
+    }
+    
+    public Node addRecursive(Node root, int data) {
+        if(root == null) {
+            root = new Node(data);
+            return root;
+        }
+        
+        if(data < root.data) {
+            root.left = addRecursive(root.left, data);
+        } 
+        else if(data > root.data) {
+            root.right = addRecursive(root.right, data);
+        }
+        
+        return root;
+    }
+    
+    public String bststr() {
+        return bsttr(root);
+    }
+    
+    public String bsttr(Node root) {
+        if(root == null) {
+            return "";
+        }
+        
+        if(root.left == null && root.right == null) {
+            return root.data + "";
+        } else if(root.right == null) {
+            return root.data + "("+ bsttr(root.left) + ")";
+        }
+        return root.data +"("+ bsttr(root.left) + ")("+ bsttr(root.right) +")";
+    }
+    
+    
+     public static void main(String []args){
+        BSTtoSTR tree = new BSTtoSTR(); 
+  
+        /* Let us create following BST 
+              50 
+           /     \ 
+          30      70 
+         /  \    /  \ 
+       20   40  60   80 */
+        tree.add(50); 
+        tree.add(30); 
+        tree.add(20); 
+        tree.add(40); 
+        tree.add(70); 
+        tree.add(60); 
+        tree.add(80); 
+        
+        System.out.println(tree.bststr());
+     }
+}
