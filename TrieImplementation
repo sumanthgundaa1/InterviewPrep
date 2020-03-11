@@ -1,13 +1,16 @@
 import java.util.*;
-public class Trie{
+public class Solution{
     
-    boolean isEnd;
-    HashMap<Character, Trie> map;
     int flag = 0;
     
-    public Trie() {
-        this.isEnd = false;
-        this.map = new HashMap<Character, Trie>();
+    static class Trie {
+        boolean isEnd;
+        HashMap<Character, Trie> map;
+    
+        public Trie() {
+            this.isEnd = false;
+            this.map = new HashMap<Character, Trie>();
+        }   
     }
     
     
@@ -41,5 +44,9 @@ public class Trie{
     }
 
      public static void main(String []args){
+         Solution s = new Solution();
+         Trie root = new Trie();
+         s.insertTrie(root, "abc", 0);
+         
      }
 }
