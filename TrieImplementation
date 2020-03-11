@@ -1,0 +1,45 @@
+import java.util.*;
+public class Trie{
+    
+    boolean isEnd;
+    HashMap<Character, Trie> map;
+    int flag = 0;
+    
+    public Trie() {
+        this.isEnd = false;
+        this.map = new HashMap<Character, Trie>();
+    }
+    
+    
+    public void insertTrie(Trie root, String word, int index) {
+        if(word.length() == index + 1) {
+            root.isEnd = true;
+            return;
+        }
+        char ch = word.charAt(index);
+        if(flag == 0) {
+            Trie child = new Trie();
+            root.map.put(ch, child);
+            root = root.map.get(ch);
+            flag = 1;
+            insertTrie(root, word, index + 1);
+        }
+        else {
+            if(root.map.containsKey(ch)) {
+                root = root.map.get(ch);
+                insertTrie(root, word, index + 1);
+            }
+            else {
+                Trie child = new Trie();
+                root.map.put(ch, child);
+                root = root.map.get(ch);
+                insertTrie(root, word, index + 1);
+            }
+            
+        }
+        
+    }
+
+     public static void main(String []args){
+     }
+}
