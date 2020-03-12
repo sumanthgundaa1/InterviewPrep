@@ -1,0 +1,100 @@
+import java.util.*;
+public class LRUCache{
+    
+       class Node{
+        int key;
+        int value;
+        Node next;
+        Node prev;
+        
+        Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+            this.next = null;
+            this.prev = null;
+        }
+    }
+    
+    int capacity;
+    HashMap<Integer, Node> map;
+    Node head;
+    Node tail;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        this.map = new HashMap<Integer, Node>();
+        this.head = null;
+        this.tail = null;
+    }
+    
+    public int get(int key) {
+        if(map.containsKey(key)) {
+            Node n = map.get(key);
+            delete(n);
+            setHead(n);
+            return n.value;
+        } 
+        return -1;
+    }
+    
+    public void put(int key, int value) {
+        if(map.containsKey(key)) {
+            Node oldNode = map.get(key);
+            oldNode.value = value;
+            delete(oldNode);
+            setHead(oldNode);
+        } else {
+            Node newNode = new Node(key, value);
+            if(map.size() >= capacity) {
+                map.remove(tail.key);
+                delete(tail);
+                setHead(newNode);
+            } else {
+                setHead(newNode);
+            }
+            map.put(key, newNode);
+        }
+    }
+    
+    public void delete(Node node) {
+        if(node.prev != null) {
+            node.prev.next = node.next;
+        } else {
+            head = node.next;
+        }
+        if(node.next != null) {
+            node.next.prev = node.prev;
+        } else {
+            tail = node.prev;
+        }
+    }
+    
+    public void setHead(Node node) {
+        node.next = head;
+        node.prev = null;
+        if(head != null) {
+            head.prev = node;
+        }
+        head = node;
+        
+        if(tail == null) {
+            tail = head;
+        }
+    }
+    
+
+     public static void main(String []args){
+        LRUCache lrucache = new LRUCache(4);
+		lrucache.put(1, 100);
+		lrucache.put(10, 99);
+		lrucache.put(15, 98);
+		lrucache.put(10, 97);
+		lrucache.put(12, 96);
+		lrucache.put(18, 95);
+		lrucache.put(1, 94);
+ 
+		System.out.println(lrucache.get(1));
+		System.out.println(lrucache.get(10));
+		System.out.println(lrucache.get(15));
+     }
+}
