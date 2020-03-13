@@ -1,0 +1,21 @@
+import java.io.*;
+public class Files{
+    
+    public void ListFiles(String path) {
+        File folder = new File(path);
+        File[] files = folder.listFiles();
+        for(File file: files) {
+            if(file.isFile()) {
+                System.out.println(file);
+            } else if(file.isDirectory()) {
+                ListFiles(file.getAbsolutePath());
+            }
+        }
+    }
+
+     public static void main(String []args){
+        
+        Files f = new Files();
+        f.ListFiles("F:/");
+     }
+}
