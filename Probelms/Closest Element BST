@@ -1,0 +1,59 @@
+import java.util.*;
+public class Main
+{
+    
+    public static class BST {
+        public class Node {
+            int val;
+            Node left;
+            Node right;
+            
+            public Node(int v) {
+                this.val = v;
+                this.left = null;
+                this.right =  null;
+            }
+        }
+        
+        Node root;
+        int minValue = Integer.MAX_VALUE;
+        Node result = null;
+        public BST() {
+            this.root = null;
+        }
+        
+        public Node initialize() {
+            root = new Node(9); 
+            root.left    = new Node(4); 
+            root.right   = new Node(17); 
+            root.left.left = new Node(3); 
+            root.left.right = new Node(6); 
+            root.left.right.left = new Node(5); 
+            root.left.right.right = new Node(7); 
+            root.right.right = new Node(22); 
+            root.right.right.left = new Node(20);
+            return root;
+        }
+        
+        public int closestElement(int k) {
+            closestElementRecursive(root, k);
+            return result.val;
+        }
+        
+        public void closestElementRecursive(Node root, int k) {
+            if(root != null) {
+                closestElementRecursive(root.left, k);
+                if(Math.abs(k - root.val) < minValue) {
+                    minValue = Math.abs(k - root.val);
+                    result = root;
+                }
+                closestElementRecursive(root.right, k);
+            }   
+        }
+    }
+	public static void main(String[] args) {
+		BST b = new BST();
+		b.initialize();
+		System.out.println(b.closestElement(18));
+	}
+}
